@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY package*.json ./
 # Ignore peer dependency issues (temporary workaround)
 ENV NPM_CONFIG_LEGACY_PEER_DEPS=true
 
-RUN npm install
+RUN npm install -g npm@latest
 
 COPY . .
 
