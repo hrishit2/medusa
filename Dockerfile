@@ -2,16 +2,15 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy only package.json and package-lock.json first for better caching
 COPY package*.json ./
 
-# Install dependencies
+# Ignore peer dependency issues (temporary workaround)
+ENV NPM_CONFIG_LEGACY_PEER_DEPS=true
+
 RUN npm install
 
-# Now copy the rest of the app
 COPY . .
 
-# Build the app
 RUN npm run build
 
 EXPOSE 9000
