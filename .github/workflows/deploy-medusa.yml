@@ -46,6 +46,6 @@ jobs:
       - name: Force new ECS deployment
         run: |
           aws ecs update-service \
-            --cluster $(terraform output -raw ecs_cluster_name) \
-            --service $(terraform output -raw ecs_service_name) \
+            --cluster $(terraform output -raw ecs_cluster_medusa) \
+            --service $(terraform output -raw ecs_service_medusa) \
             --force-new-deployment
