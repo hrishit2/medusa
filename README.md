@@ -18,11 +18,7 @@ Terraform configuration files.
 
 main.tf: AWS infrastructure setup (ECS, IAM, VPC, etc.)
 
-variables.tf: Input variables used in Terraform
-
 outputs.tf: Outputs used by GitHub Actions
-
-terraform.tfvars: Actual values for your deployment
 
 Dockerfile
 Used to build the Docker image for the Medusa backend.
