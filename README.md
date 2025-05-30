@@ -1,105 +1,136 @@
-🚀 Medusa Backend Deployment on AWS ECS Fargate (via Docker, Terraform, GitHub Actions)
+🚀 Medusa Backend Deployment on AWS ECS Fargate
+This project demonstrates how to containerize, provision infrastructure, and automate deployment of the Medusa backend using:
 
-This project demonstrates how to containerize, deploy using infrastructure as code, and automate deployment of the Medusa backend using:
+Docker (for building the image)
 
-Docker for building container images
+Terraform (for creating AWS infrastructure)
 
-Terraform for provisioning AWS infrastructure (like ECS, VPC, IAM)
+GitHub Actions (for CI/CD)
 
-GitHub Actions for CI/CD automation
-
-AWS ECS Fargate to host the backend as a serverless container
+AWS ECS Fargate (for hosting the container)
 
 📁 Repository Structure
-.github/workflows/deploy.yml: CI/CD GitHub Actions workflow
+.github/workflows/deploy.yml
+GitHub Actions workflow for building and deploying the Medusa backend.
 
-terraform/: Contains all Terraform configuration files
+terraform/
+Terraform configuration files.
 
-main.tf: Sets up ECS, networking, IAM, etc.
+main.tf: AWS infrastructure setup (ECS, IAM, VPC, etc.)
 
-variables.tf: Inputs for customizing your infrastructure
+variables.tf: Input variables used in Terraform
 
-outputs.tf: Outputs used in deployment (like ECS names)
+outputs.tf: Outputs used by GitHub Actions
 
-terraform.tfvars: Your actual values for each input
+terraform.tfvars: Actual values for your deployment
 
-Dockerfile: Builds the Medusa backend container
+Dockerfile
+Used to build the Docker image for the Medusa backend.
 
-README.md: Documentation for setup and usage
+README.md
+This documentation.
 
 🛠️ Technologies Used
-Medusa backend (Node.js-based headless commerce system)
+Medusa (Node.js headless commerce backend)
 
-Docker & Docker Hub (for container image building and storage)
+Docker & Docker Hub
 
-AWS ECS Fargate (for serverless container hosting)
+AWS ECS Fargate
 
-Terraform (to define and provision cloud resources)
+Terraform
 
-GitHub Actions (to automate build and deployment steps)
+GitHub Actions
 
 🚧 Prerequisites
-Before starting, ensure you have:
+Make sure you have:
 
-An AWS account with appropriate access
+AWS account with programmatic access enabled
 
-Docker Hub account
+Docker Hub account with a repository created
 
 GitHub repository secrets configured:
 
-Docker Hub username and access token
+DOCKERHUB_USERNAME
 
-AWS access key ID and secret access key
+DOCKERHUB_ACCESS_TOKEN
 
-AWS region (e.g., ap-south-1)
+AWS_ACCESS_KEY_ID
+
+AWS_SECRET_ACCESS_KEY
+
+AWS_REGION
 
 📦 Dockerfile Purpose
-The Dockerfile describes how to install dependencies, build the Medusa project, expose the application port, and start the server inside a Docker container.
+The Dockerfile contains instructions to:
+
+Set up the Node.js environment
+
+Install dependencies
+
+Build the Medusa project
+
+Expose the necessary port
+
+Start the backend server
+
+This file ensures the Medusa backend runs properly inside a container.
 
 📐 Terraform Configuration
-Terraform is used to:
+Terraform is used to create and manage:
 
-Create a secure and isolated network (VPC, subnets)
+A virtual private cloud (VPC) and subnets
 
-Set up ECS cluster and Fargate service
+ECS cluster and Fargate service
 
-Create IAM roles for ECS tasks and services
+IAM roles and permissions
 
-Define log groups for ECS monitoring
+CloudWatch logging for ECS
 
-You initialize and apply the Terraform configuration to provision all required AWS infrastructure automatically.
+Security groups and networking
+
+You run terraform init and terraform apply to deploy infrastructure.
 
 ⚙️ GitHub Actions Workflow
-This file automates:
+The GitHub Actions CI/CD workflow performs the following:
 
-Checking out your repository
+Checks out your repository
 
-Setting up Docker and logging into Docker Hub
+Sets up Docker and logs into Docker Hub
 
-Building and pushing the Medusa container image to Docker Hub
+Builds and pushes the Medusa Docker image to Docker Hub
 
-Using the AWS CLI to trigger a new ECS deployment
+Configures AWS credentials
 
-Secrets from your GitHub repo are used to securely connect to Docker Hub and AWS.
+Triggers a new ECS deployment to pull the latest image
+
+This ensures your application is deployed every time you push to the main branch.
 
 🚀 Deployment Flow
-You push code to the main branch.
+You push changes to the main branch.
 
-GitHub Actions automatically builds the Docker image.
+GitHub Actions builds the Docker image.
 
-It pushes the image to Docker Hub.
+The image is pushed to Docker Hub.
 
-GitHub Actions then forces a new deployment on your ECS service.
+AWS ECS service is updated to pull the latest image.
 
-ECS pulls the new image and redeploys the Medusa backend.
+The Medusa backend is deployed on Fargate.
 
 🌐 Accessing the Backend
-If your ECS service is deployed in a public subnet with a public IP assigned, you can access the Medusa backend via the public IP and the app’s port (usually 9000).
+If your service is deployed with a public IP:
 
-You can find the public IP in the ECS Console under the running task's network section.
+Go to the ECS Console
 
-📹 Deliverables for Review
-Public GitHub repository with:
+Navigate to your running task
+
+Copy the public IP address
+
+Access your backend via http://<public-ip>:9000
+
+📹 Deliverables
+To complete the project, you should have:
+
+A public GitHub repository containing:
 
 Terraform code
 
@@ -107,18 +138,26 @@ Dockerfile
 
 GitHub Actions workflow
 
-A successfully deployed Medusa backend running in ECS Fargate
+A deployed Medusa backend running in ECS
 
-(Optional) A video walkthrough showing the setup, deployment, and output
+A video walkthrough showing:
 
-📞 Troubleshooting Tips
-Make sure the ECS cluster and service names are hardcoded correctly in GitHub Actions if Terraform outputs aren't used
+Code explanation
 
-Check ECS logs in CloudWatch if the container fails
+Deployment steps
 
-Validate that your Docker image is built and pushed successfully to Docker Hub
+Running backend demo
 
-Make sure the right AWS IAM roles are used by Terraform
+🐛 Troubleshooting Tips
+If the GitHub Actions job fails, check logs for Docker or AWS CLI errors.
+
+If the ECS service doesn’t update, verify IAM permissions and ECS names.
+
+If the container crashes, review logs in AWS CloudWatch.
+
+Ensure public subnet and security group allow inbound traffic on port 9000.
 
 📄 License
-This is a demo project intended for learning and presentation purposes.
+This is a demo project provided for learning, testing, and educational purposes.
+
+Let me know if you'd like a version with code included, a separate video script, or a Markdown-formatted .md file download.
