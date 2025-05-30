@@ -30,3 +30,7 @@ dist/**
 
 # Cache File
 /packages/**/.cache
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
